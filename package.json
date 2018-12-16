@@ -1,0 +1,39 @@
+{
+  "name": "@desuuuu/jrpc-client",
+  "version": "1.0.0",
+  "description": "JSON-RPC client with pluggable transports",
+  "main": "index.js",
+  "dependencies": {
+    "check-types": "^7.4.0",
+    "jrpc": "^3.1.2",
+    "lazy-promise": "^4.0.0",
+    "p-props": "^1.2.0"
+  },
+  "devDependencies": {
+    "docma": "^3.1.0",
+    "jest": "^23.6.0"
+  },
+  "scripts": {
+    "docs": "docma -c ./docma.json",
+    "test": "jest --testPathPattern=\\.test\\.js$"
+  },
+  "engines": {
+    "node": ">=7.10.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/desuuuu/jrpc-client.git"
+  },
+  "keywords": [
+    "json-rpc",
+    "json",
+    "rpc",
+    "client"
+  ],
+  "author": "Desuuuu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/desuuuu/jrpc-client/issues"
+  },
+  "homepage": "https://github.com/desuuuu/jrpc-client#readme"
+}
