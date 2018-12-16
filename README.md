@@ -16,7 +16,7 @@ JSON-RPC client with pluggable transports.
 npm install @desuuuu/jrpc-client
 ```
 
-Take a look at the [examples/](examples) for sample code.
+Take a look at the [examples](examples) for sample code.
 
 ## Transports
 
