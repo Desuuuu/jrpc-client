@@ -251,7 +251,7 @@ class JRPCClient extends EventEmitter {
   }
 
   /**
-   * Prepare a call for {@link JRPCClient.batch|`batch`}.
+   * Prepare a call for {@link JRPCClient#batch|`batch`}.
    *
    * @param {String} method - RPC method to call.
    * @param {*} params - RPC parameters.
@@ -281,7 +281,7 @@ class JRPCClient extends EventEmitter {
   /**
    * Send a batch of remote calls.
    *
-   * Calls must be prepared with {@link JRPCClient.prepare|`prepare`}.
+   * Calls must be prepared with {@link JRPCClient#prepare|`prepare`}.
    *
    * @param {LazyPromise[]|Object} requests - List of calls to make. Can be an array or an object of prepared calls.
    *
