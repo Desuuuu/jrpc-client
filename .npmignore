@@ -1,5 +1,6 @@
 /docs
 /__tests__
 /examples
+/.travis.yml
 /docma.json
 /jsdoc-promise.js
