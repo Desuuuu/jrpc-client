@@ -1,6 +1,6 @@
 # jrpc-client
 
-![npm](https://img.shields.io/npm/v/@desuuuu/jrpc-client.svg) ![Size](https://img.shields.io/github/languages/code-size/desuuuu/jrpc-client.svg) ![License](https://img.shields.io/github/desuuuu/jrpc-client.svg)
+![Build](https://img.shields.io/travis/com/Desuuuu/jrpc-client.svg) ![npm](https://img.shields.io/npm/v/@desuuuu/jrpc-client.svg) ![Size](https://img.shields.io/github/languages/code-size/desuuuu/jrpc-client.svg) ![License](https://img.shields.io/github/desuuuu/jrpc-client.svg)
 
 JSON-RPC client with pluggable transports.
 
