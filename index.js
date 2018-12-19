@@ -221,11 +221,7 @@ class JRPCClient extends EventEmitter {
 
       let { transport, remote, autoConnect } = _data.get(this);
 
-      if (!autoConnect && transport.needsConnection && !transport.isConnected) {
-        return reject(new Error('Transport not connected'));
-      }
-
-      this.connect().then(() => {
+      let makeCall = () => {
         remote.call(method, (params || []), (err, result) => {
           if (rejectOnError) {
             if (err) {
@@ -246,7 +242,17 @@ class JRPCClient extends EventEmitter {
 
           transport.send(data).catch(reject);
         }));
-      }).catch(reject);
+      };
+
+      if (transport.needsConnection && !transport.isConnected) {
+        if (!autoConnect) {
+          return reject(new Error('Transport not connected'));
+        }
+
+        return transport.connect().then(makeCall).catch(reject);
+      }
+
+      makeCall();
     });
   }
 
@@ -331,11 +337,7 @@ class JRPCClient extends EventEmitter {
 
       let { transport, remote, autoConnect } = _data.get(this);
 
-      if (!autoConnect && transport.needsConnection && !transport.isConnected) {
-        return reject(new Error('Transport not connected'));
-      }
-
-      this.connect().then(() => {
+      let makeCalls = () => {
         if (array) {
           Promise.all(requests).then(resolve).catch(reject);
         } else {
@@ -347,7 +349,17 @@ class JRPCClient extends EventEmitter {
 
           transport.send(data).catch(reject);
         }));
-      }).catch(reject);
+      };
+
+      if (transport.needsConnection && !transport.isConnected) {
+        if (!autoConnect) {
+          return reject(new Error('Transport not connected'));
+        }
+
+        return transport.connect().then(makeCalls).catch(reject);
+      }
+
+      makeCalls();
     });
   }
 
