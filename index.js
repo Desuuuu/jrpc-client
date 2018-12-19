@@ -146,9 +146,9 @@ class JRPCClient extends EventEmitter {
    * @reject {Error} Connection error.
    */
   async connect() {
-    let { transport } = _data.get(this);
+    if (!this.isConnected) {
+      let { transport } = _data.get(this);
 
-    if (transport.needsConnection && !transport.isConnected) {
       return await transport.connect();
     }
   }
@@ -159,9 +159,9 @@ class JRPCClient extends EventEmitter {
    * @promise {Promise} Resolves once disconnected.
    */
   async disconnect() {
-    let { transport } = _data.get(this);
+    if (!this.isConnected) {
+      let { transport } = _data.get(this);
 
-    if (transport.needsConnection && transport.isConnected) {
       return await transport.disconnect();
     }
   }
@@ -244,12 +244,12 @@ class JRPCClient extends EventEmitter {
         }));
       };
 
-      if (transport.needsConnection && !transport.isConnected) {
+      if (!this.isConnected) {
         if (!autoConnect) {
           return reject(new Error('Transport not connected'));
         }
 
-        return transport.connect().then(makeCall).catch(reject);
+        return this.connect().then(makeCall).catch(reject);
       }
 
       makeCall();
@@ -351,12 +351,12 @@ class JRPCClient extends EventEmitter {
         }));
       };
 
-      if (transport.needsConnection && !transport.isConnected) {
+      if (!this.isConnected) {
         if (!autoConnect) {
           return reject(new Error('Transport not connected'));
         }
 
-        return transport.connect().then(makeCalls).catch(reject);
+        return this.connect().then(makeCalls).catch(reject);
       }
 
       makeCalls();
