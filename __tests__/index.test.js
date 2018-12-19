@@ -52,7 +52,33 @@ describe('jrpc-client', () => {
     await client.destroy();
   });
 
-  test('can auto-connect transports', async () => {
+  test('can manually connect and disconnect', async () => {
+    let client = new JRPCClient({
+      transport: new ConnectedTransport()
+    });
+
+    expect(client.isConnected).toBe(false);
+
+    await client.connect();
+
+    expect(client.isConnected).toBe(true);
+
+    await client.disconnect();
+
+    expect(client.isConnected).toBe(false);
+
+    await client.connect();
+
+    expect(client.isConnected).toBe(true);
+
+    await client.disconnect();
+
+    expect(client.isConnected).toBe(false);
+
+    await client.destroy();
+  });
+
+  test('can automatically connect', async () => {
     expect.assertions(7);
 
     let client = new JRPCClient({

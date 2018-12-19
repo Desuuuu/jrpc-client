@@ -18,13 +18,17 @@ class ConnectedTransport extends FakeTransport {
   connect() {
     this._connected = true;
 
-    return Promise.resolve();
+    return new Promise((resolve) => {
+      setTimeout(resolve, 50);
+    });
   }
 
   disconnect() {
     this._connected = false;
 
-    return Promise.resolve();
+    return new Promise((resolve) => {
+      setTimeout(resolve, 50);
+    });
   }
 
   send(data) {
