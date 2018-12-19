@@ -20,6 +20,9 @@
   "engines": {
     "node": ">=7.10.1"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/desuuuu/jrpc-client.git"
