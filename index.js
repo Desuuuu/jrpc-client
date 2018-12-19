@@ -146,9 +146,9 @@ class JRPCClient extends EventEmitter {
    * @reject {Error} Connection error.
    */
   async connect() {
-    if (!this.isConnected) {
-      let { transport } = _data.get(this);
+    let { transport } = _data.get(this);
 
+    if (transport.needsConnection && !transport.isConnected) {
       return await transport.connect();
     }
   }
@@ -159,9 +159,9 @@ class JRPCClient extends EventEmitter {
    * @promise {Promise} Resolves once disconnected.
    */
   async disconnect() {
-    if (!this.isConnected) {
-      let { transport } = _data.get(this);
+    let { transport } = _data.get(this);
 
+    if (transport.needsConnection && transport.isConnected) {
       return await transport.disconnect();
     }
   }
