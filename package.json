@@ -1,6 +1,6 @@
 {
   "name": "@desuuuu/jrpc-client",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "JSON-RPC client with pluggable transports",
   "main": "index.js",
   "dependencies": {
