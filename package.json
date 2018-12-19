@@ -15,8 +15,7 @@
   },
   "scripts": {
     "docs": "docma -c ./docma.json",
-    "test": "jest --testPathPattern=\\.test\\.js$",
-    "prepublishOnly": "npm test"
+    "test": "jest --testPathPattern=\\.test\\.js$"
   },
   "engines": {
     "node": ">=7.10.1"

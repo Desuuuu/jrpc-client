@@ -6,9 +6,12 @@ node_js:
   - '8'
   - '7.10.1'
 
-branches:
-  only:
-    - master
+deploy:
+  provider: npm
+  email: $NPM_EMAIL
+  api_key: $NPM_TOKEN
+  on:
+    tags: true
 
 cache:
   directories:

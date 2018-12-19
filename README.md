@@ -3,7 +3,7 @@
 [![npm](https://img.shields.io/npm/v/@desuuuu/jrpc-client.svg)](https://www.npmjs.com/package/@desuuuu/jrpc-client)
 [![Size](https://img.shields.io/github/languages/code-size/desuuuu/jrpc-client.svg)](#)
 [![License](https://img.shields.io/github/license/desuuuu/jrpc-client.svg)](LICENSE)
-[![Build](https://img.shields.io/travis/com/Desuuuu/jrpc-client.svg)](https://travis-ci.com/Desuuuu/jrpc-client)
+[![Build](https://img.shields.io/travis/Desuuuu/jrpc-client.svg)](https://travis-ci.org/Desuuuu/jrpc-client)
 
 JSON-RPC client with pluggable transports.
 
