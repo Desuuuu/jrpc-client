@@ -71,6 +71,7 @@ class JRPCClient extends EventEmitter {
    * @param {Object} options - Client options.
    * @param {Object} options.transport - Transport instance to use for communication.
    * @param {Boolean} [options.autoConnect=true] - Whether to connect the transport automatically when sending data.
+   * @param {Boolean} [options.batchRequests=true] - Turning this off will disable batching. The batching API will still be available but will send requests individually.
    * @param {Number} [options.timeout=60000] - Time to wait for a server response before returning an error. Minimum `1000`.
    *
    * @throws {TypeError} Invalid parameter.
@@ -84,12 +85,13 @@ class JRPCClient extends EventEmitter {
    *   transport: transport // Your transport instance
    * });
    */
-  constructor({ transport, autoConnect = true, timeout = 60000 }) {
+  constructor({ transport, autoConnect = true, batchRequests = true, timeout = 60000 }) {
     super();
 
     checkTransport(transport);
 
     check.assert.boolean(autoConnect, 'invalid "autoConnect" option');
+    check.assert.boolean(batchRequests, 'invalid "batchRequests" option');
     check.assert.greaterOrEqual(timeout, 1000, 'invalid "timeout" option');
 
     let transportHandlers = {
@@ -111,7 +113,8 @@ class JRPCClient extends EventEmitter {
       transport,
       transportHandlers,
       remote,
-      autoConnect
+      autoConnect,
+      batchRequests
     });
   }
 
@@ -237,11 +240,11 @@ class JRPCClient extends EventEmitter {
           });
         });
 
-        setImmediate(remote.transmit.bind(remote, (data, next) => {
+        remote.transmit((data, next) => {
           next();
 
           transport.send(data).catch(reject);
-        }));
+        });
       };
 
       if (!this.isConnected) {
@@ -273,7 +276,7 @@ class JRPCClient extends EventEmitter {
         return reject(new TypeError('missing/invalid "method" parameter'));
       }
 
-      let { remote } = _data.get(this);
+      let { transport, remote, batchRequests } = _data.get(this);
 
       remote.call(method, (params || []), (err, result) => {
         resolve({
@@ -281,6 +284,14 @@ class JRPCClient extends EventEmitter {
           result: (result || null)
         });
       });
+
+      if (!batchRequests) {
+        remote.transmit((data, next) => {
+          next();
+
+          transport.send(data).catch(reject);
+        });
+      }
     });
   }
 
@@ -335,7 +346,7 @@ class JRPCClient extends EventEmitter {
         return reject(new TypeError('missing/invalid "requests" parameter'));
       }
 
-      let { transport, remote, autoConnect } = _data.get(this);
+      let { transport, remote, autoConnect, batchRequests } = _data.get(this);
 
       let makeCalls = () => {
         if (array) {
@@ -344,11 +355,13 @@ class JRPCClient extends EventEmitter {
           pProps(requests).then(resolve).catch(reject);
         }
 
-        setImmediate(remote.transmit.bind(remote, (data, next) => {
-          next();
+        if (batchRequests) {
+          setImmediate(remote.transmit.bind(remote, (data, next) => {
+            next();
 
-          transport.send(data).catch(reject);
-        }));
+            transport.send(data).catch(reject);
+          }));
+        }
       };
 
       if (!this.isConnected) {
